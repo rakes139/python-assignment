@@ -1,0 +1,136 @@
+1. Find 2 elements with given sum
+
+def find_elements_with_sum(arr, target_sum):
+    # Sort the array in ascending order
+    arr.sort()
+    
+    # Initialize two pointers, one at the beginning and the other at the end of the array
+    left = 0
+    right = len(arr) - 1
+    
+    # Iterate until the pointers meet or cross each other
+    while left < right:
+        current_sum = arr[left] + arr[right]
+        
+        if current_sum == target_sum:
+            # Found a pair with the given sum
+            return [arr[left], arr[right]]
+        elif current_sum < target_sum:
+            # The sum is smaller than the target, move the left pointer to the right
+            left += 1
+        else:
+            # The sum is larger than the target, move the right pointer to the left
+            right -= 1
+    
+    # No pair found with the given sum
+    return None
+
+# Example usage:
+arr = [2, 4, 7, 11, 15]
+target_sum = 9
+result = find_elements_with_sum(arr, target_sum)
+
+if result:
+    print(f"The pair with sum {target_sum} is: {result[0]} and {result[1]}")
+else:
+    print("No pair found with the given sum.")
+
+
+2. Majority Element
+def find_majority_element(arr):
+    count = 0
+    candidate = None
+
+    for num in arr:
+        if count == 0:
+            candidate = num
+            count = 1
+        elif candidate == num:
+            count += 1
+        else:
+            count -= 1
+
+    # Now, the candidate is the potential majority element.
+    # Let's check if it appears more than n/2 times.
+    count = 0
+    for num in arr:
+        if num == candidate:
+            count += 1
+
+    n = len(arr)
+    if count > n / 2:
+        return candidate
+    else:
+        return None
+
+# Test the function
+arr = [1, 1, 2, 1, 3, 5, 1]
+result = find_majority_element(arr)
+
+if result is not None:
+    print(f"The majority element is {result}.")
+else:
+    print("No majority element found in the array.")
+
+
+
+3. Find the number occuring odd number of times
+
+def find_odd_occurrence(arr):
+    result = 0
+    for num in arr:
+        result ^= num
+    return result
+
+# Test the function
+arr = [1, 2, 3, 2, 1, 3, 5]
+result = find_odd_occurrence(arr)
+print("The number occurring an odd number of times is:", result)
+
+4. Merge an array of size n into another of size m + n
+def merge_arrays(arr1, arr2, m, n):
+    p1 = m - 1  # Pointer for arr1
+    p2 = n - 1  # Pointer for arr2
+    p = m + n - 1  # Pointer for the merged array
+
+    # Merge the arrays using the two-pointer approach
+    while p1 >= 0 and p2 >= 0:
+        if arr1[p1] >= arr2[p2]:
+            arr1[p] = arr1[p1]
+            p1 -= 1
+        else:
+            arr1[p] = arr2[p2]
+            p2 -= 1
+        p -= 1
+
+    # Copy any remaining elements from arr2 to arr1
+    while p2 >= 0:
+        arr1[p] = arr2[p2]
+        p2 -= 1
+        p -= 1
+
+# Test the function
+arr1 = [1, 3, 5, 0, 0, 0]
+arr2 = [2, 4, 6]
+m = 3
+n = 3
+merge_arrays(arr1, arr2, m, n)
+print("Merged Array:", arr1)
+
+
+5. Rotate an array
+
+def rotate_array(arr, k):
+    # Calculate the actual rotation count
+    k = k % len(arr)
+    
+    # Rotate the array using array slicing
+    arr = arr[-k:] + arr[:-k]
+    return arr
+
+# Test the function
+arr = [1, 2, 3, 4, 5]
+k = 2
+rotated_arr = rotate_array(arr, k)
+print("Original Array:", arr)
+print("Rotated Array:", rotated_arr)
